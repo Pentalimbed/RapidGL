@@ -19,11 +19,31 @@ add_library(stb_image STATIC ${STB_IMAGE_DIR}/stb_image.cpp
 target_include_directories(stb_image PRIVATE ${STB_IMAGE_DIR})
 
 # other
-CPMAddPackage("gh:assimp/assimp@5.2.5")
-CPMAddPackage("gh:glfw/glfw#3.3.8")
-CPMAddPackage("gh:g-truc/glm#0.9.9.8")
-CPMAddPackage("gh:ocornut/imgui@1.88")
-CPMAddPackage("gh:gabime/spdlog@1.10.0")
+add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/spdlog-1.11.0")
+
+add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/assimp-5.2.5")
+
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "GLFW lib only")
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "GLFW lib only")
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "GLFW lib only")
+set(GLFW_INSTALL OFF CACHE BOOL "GLFW lib only")
+add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/glfw-3.3.8")
+
+add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/glm")
+
+set(imgui_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/imgui-1.89.5")
+# include_directories(
+# 	${imgui_SOURCE_DIR}
+# 	${imgui_SOURCE_DIR}/backends
+# )
+# file(GLOB sources
+#     "${imgui_SOURCE_DIR}/*.h"
+#     "${imgui_SOURCE_DIR}/*.cpp"
+#     "${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.h"
+#     "${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp"
+#     "${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h"
+#     "${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp"
+# )
 
 set(imgui_SOURCE_DIR ${imgui_SOURCE_DIR} CACHE INTERNAL "")
 add_library(imgui STATIC ${imgui_SOURCE_DIR}/imgui.cpp
